@@ -1,31 +1,41 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/Main">Main</router-link>
-    </nav>
-    <router-view/>
+    <b-card title="Card Title" no-body>
+      <b-card-header header-tag="nav">
+        <b-nav card-header tabs>
+          <b-nav-item v-for="item in routers" :key="item.to" :to="item.to" :active="isActive(item.to)">
+            {{ item.title }}
+          </b-nav-item>
+        </b-nav>
+      </b-card-header>
+
+      <b-card-body>
+        <router-view></router-view>
+      </b-card-body>
+    </b-card>
   </div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+  data: () => ({
+    routers: [
+      {
+        to: '/play',
+        title: 'Игра'
+      },
+      {
+        to: '/test',
+        title: 'Проверка'
+      }
+    ]
+  }),
+  methods: {
+    isActive(path) {
+      console.log(this.$router.currentRoute)
+      return this.$router.currentRoute.fullPath === path;
+      //   ? 'active'
+      //   : '';
+    }
+  }
 }
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
